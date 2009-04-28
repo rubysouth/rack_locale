@@ -6,9 +6,9 @@ module RubySouth
 
     def self.best_match_for(*locales)
       locales = locales.flatten.compact.uniq
-      matches = locales.collect { |l| l.to_sym } & ::I18n.available_locales
+      matches = locales.map { |l| l.to_sym } & ::I18n.available_locales
       if matches.empty?
-        matches = locales.collect { |l| l.to_s.slice(0,2) } & ::I18n.available_locales.map { |l| l.to_s.slice(0,2) }
+        matches = locales.map { |l| l.to_s.slice(0,2) } & ::I18n.available_locales.map { |l| l.to_s.slice(0,2) }
       end
       (matches.first || ::I18n.default_locale).to_sym
     end
@@ -42,11 +42,11 @@ module RubySouth
 
       def accepted_locales
         return [] if !env["HTTP_ACCEPT_LANGUAGE"]
-        env["HTTP_ACCEPT_LANGUAGE"].split(',').collect { |l|
+        env["HTTP_ACCEPT_LANGUAGE"].split(',').map { |l|
           l.split(';q=')
         }.sort { |x, y|
           (y[1] || 1).to_f <=> (x[1] || 1).to_f
-        }.collect { |l|
+        }.map { |l|
           l[0].downcase.gsub("-", "_").to_sym
         }
       rescue => error
