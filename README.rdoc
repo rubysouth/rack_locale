@@ -2,6 +2,13 @@
 
 A slightly better locale middleware for Rack.
 
+What's different from the locale middleware in rack/contrib?
+
+* Adds a locale method to Rack::Request.
+* You can set a "locale" GET variable to change the locale.
+* Each request sets a cookie with the current locale to preserve it across requests.
+* Resolves languages specified in HTTP_ACCEPT_LANGUAGE with your available locales.
+
 == Example Sinatra app:
 
     require 'rubygems'
