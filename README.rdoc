@@ -1,0 +1,43 @@
+== Rack Locale
+
+A slightly better locale middleware for Rack.
+
+== Example Sinatra app:
+
+    require 'rubygems'
+    require 'sinatra'
+    require 'rack_locale'
+
+    use RubySouth::Rack::Locale
+
+    I18n.backend = I18n::Backend::Simple.new
+    I18n.backend.load_translations("en.yml", "es.yml")
+
+    before do
+      I18n.locale = request.locale
+    end
+
+    helpers do
+      def t(*args)
+        I18n.translate(*args)
+      end
+    end
+
+    get "/" do
+      haml :index
+    end
+  
+  # index.haml
+  %p
+    = t(:hello_world)
+  %p
+    %a{:href => '?locale=en'} English
+    %a{:href => '?locale=es'} Spanish
+
+  # es.yml
+  es:
+    hello_world: ¡Hola mundo!
+  
+  # en.yml
+  en:
+    hello_world: Hello world!
