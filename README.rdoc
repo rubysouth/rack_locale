@@ -48,3 +48,9 @@ What's different from the locale middleware in rack/contrib?
   # en.yml
   en:
     hello_world: Hello world!
+    
+Installation
+
+Download and build it, or install the gem from Github. Note that it currently
+depends on {Sven Fuchs's fork of
+i18n}[http://github.com/svenfuchs/i18n/tree/master].
